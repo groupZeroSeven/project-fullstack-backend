@@ -2,8 +2,8 @@ import "reflect-metadata";
 import "dotenv/config";
 import { DataSource } from "typeorm";
 import { User } from "./Entities/user.entity";
-import { FirstUser1680654833432 } from "./Migrations/1680654833432-FirstUser";
-import { FirstUser1680654918059 } from "./Migrations/1680654918059-FirstUser";
+import { Annoucement } from "./Entities/annoucement.entity";
+import { Annoucemigration1681138479583 } from "./Migrations/1681138479583-Annoucemigration";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -22,8 +22,8 @@ const AppDataSource = new DataSource(
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
-        entities: [User],
-        migrations: [FirstUser1680654833432, FirstUser1680654918059],
+        entities: [User, Annoucement],
+        migrations: [Annoucemigration1681138479583],
       }
 );
 
