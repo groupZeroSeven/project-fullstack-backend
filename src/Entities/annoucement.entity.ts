@@ -17,7 +17,7 @@ export class Annoucement {
   @Column()
   banner: string;
 
-  @Column({ length: 50, unique: true })
+  @Column()
   model: string;
 
   @Column({ length: 120 })
