@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { User } from "./Entities/user.entity";
 import { Annoucement } from "./Entities/annoucement.entity";
 import { Annoucemigration1681138479583 } from "./Migrations/1681138479583-Annoucemigration";
+import { banner1681232088826 } from "./Migrations/1681232088826-banner";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -23,7 +24,7 @@ const AppDataSource = new DataSource(
         logging: true,
         synchronize: false,
         entities: [User, Annoucement],
-        migrations: [Annoucemigration1681138479583],
+        migrations: [Annoucemigration1681138479583, banner1681232088826],
       }
 );
 

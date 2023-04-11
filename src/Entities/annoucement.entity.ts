@@ -14,6 +14,9 @@ export class Annoucement {
   @Column({ length: 50 })
   brand: string;
 
+  @Column()
+  banner: string;
+
   @Column({ length: 50, unique: true })
   model: string;
 

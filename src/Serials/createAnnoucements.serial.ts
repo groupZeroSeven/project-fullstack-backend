@@ -6,6 +6,7 @@ import { IAnnoucementRequest } from "../interfaces/annoucements";
 const createAnnoucementShape: Schema<IAnnoucementRequest> = yup.object().shape({
   brand: yup.string().required(),
   model: yup.string().required(),
+  banner: yup.string().required(),
   year: yup.string().required(),
   fuel: yup.string().required(),
   mileage: yup.number().required(),

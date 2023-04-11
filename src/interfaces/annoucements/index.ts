@@ -1,6 +1,7 @@
 export interface IAnnoucementRequest {
   brand: string;
   model: string;
+  banner: string;
   year: string;
   fuel: string;
   mileage: number;
@@ -15,6 +16,7 @@ export interface IAnnoucementResponse {
   id: string;
   brand: string;
   model: string;
+  banner: string;
   year: string;
   fuel: string;
   mileage: number;
@@ -32,6 +34,7 @@ export interface IAnnoucement {
   brand: string;
   model: string;
   year: string;
+  banner: string;
   fuel: string;
   mileage: number;
   color: string;
@@ -47,6 +50,7 @@ export interface IAnnoucementUpdate {
   brand: string;
   model: string;
   year: string;
+  banner: string;
   fuel: string;
   mileage: number;
   color: string;
