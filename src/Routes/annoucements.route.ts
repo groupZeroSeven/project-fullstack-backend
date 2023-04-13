@@ -15,6 +15,7 @@ import {
   deleteAnnoucementController,
   retriveAnnoucementController,
 } from "../Controllers/annoucement.controller";
+import patchAnnoucementShape from "../Serials/createAnnoucements.serial copy";
 
 const annoucementsRouter = Router();
 
@@ -27,7 +28,7 @@ annoucementsRouter.post(
 );
 annoucementsRouter.patch(
   `/api/anoucements/:id`,
-  validateSchemaMiddleware(createAnnoucementShape),
+  validateSchemaMiddleware(patchAnnoucementShape),
   updateAnnoucementController
 );
 annoucementsRouter.delete(`/api/anoucements/:id`, deleteAnnoucementController);

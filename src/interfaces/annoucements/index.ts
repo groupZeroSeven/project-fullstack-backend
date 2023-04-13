@@ -12,6 +12,20 @@ export interface IAnnoucementRequest {
   is_published?: boolean;
 }
 
+export interface IAnnoucementPatchRequest {
+  brand?: string;
+  model?: string;
+  banner?: string;
+  year?: string;
+  fuel?: string;
+  mileage?: number;
+  color?: string;
+  price?: number;
+  description?: string;
+  is_bargain?: boolean;
+  is_published?: boolean;
+}
+
 export interface IAnnoucementResponse {
   id: string;
   brand: string;
