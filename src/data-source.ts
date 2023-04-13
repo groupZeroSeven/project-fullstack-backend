@@ -9,6 +9,7 @@ import { unique1681232347779 } from "./Migrations/1681232347779-unique";
 import { default1681392681078 } from "./Migrations/1681392681078-default";
 import { Image } from "./Entities/image.entity";
 import { images1681407815375 } from "./Migrations/1681407815375-images";
+import { imagesCASCADE1681426545452 } from "./Migrations/1681426545452-imagesCASCADE";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -34,6 +35,7 @@ const AppDataSource = new DataSource(
           unique1681232347779,
           default1681392681078,
           images1681407815375,
+          imagesCASCADE1681426545452,
         ],
       }
 );

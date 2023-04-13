@@ -52,6 +52,6 @@ export class Annoucement {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Image, (image) => image.annoucement)
+  @OneToMany(() => Image, (image) => image.annoucement, { onDelete: "CASCADE" })
   images: Image[];
 }
