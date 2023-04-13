@@ -8,6 +8,25 @@ import {
 } from "../interfaces/annoucements";
 import { Request } from "express";
 
+export const createImageService = async (request: Request): Promise<Image> => {
+  const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const imagesRepository = AppDataSource.getRepository(Image);
+  const annoucement = await annoucementRepository.findOneBy({
+    id: request.params.id,
+  });
+
+  if (!annoucement) {
+    throw new AppError("Annoucement not found", 404);
+  }
+  const createdImages = imagesRepository.create({
+    url: request.body.url,
+    annoucement: annoucement,
+  });
+  await imagesRepository.save(createdImages);
+
+  return createdImages;
+};
+
 export const deleteImagesService = async (
   request: Request
 ): Promise<number> => {

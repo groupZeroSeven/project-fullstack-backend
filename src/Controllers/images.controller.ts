@@ -6,7 +6,18 @@ import {
   retrieveAnnoucementService,
 } from "../Services/annoucements.services";
 import { Request, Response } from "express";
-import { deleteImagesService } from "../Services/images.services";
+import {
+  createImageService,
+  deleteImagesService,
+} from "../Services/images.services";
+
+export const createImageController = async (
+  request: Request,
+  response: Response
+) => {
+  const newImage = await createImageService(request);
+  return response.status(201).json(newImage);
+};
 
 export const deleteImagesController = async (
   request: Request,
