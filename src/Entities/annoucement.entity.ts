@@ -41,7 +41,7 @@ export class Annoucement {
   @Column({ default: false })
   is_bargain: boolean;
 
-  @Column({ default: false })
+  @Column({ default: true })
   is_published: boolean;
 
   @CreateDateColumn()
