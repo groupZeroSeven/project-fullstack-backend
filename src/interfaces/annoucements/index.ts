@@ -8,8 +8,8 @@ export interface IAnnoucementRequest {
   color: string;
   price: number;
   description: string;
-  is_bargain: boolean;
-  is_published: boolean;
+  is_bargain?: boolean;
+  is_published?: boolean;
 }
 
 export interface IAnnoucementResponse {
