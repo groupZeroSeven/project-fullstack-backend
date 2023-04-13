@@ -1,3 +1,5 @@
+import { Image } from "../../Entities/image.entity";
+
 export interface IAnnoucementRequest {
   brand: string;
   model: string;
@@ -8,6 +10,7 @@ export interface IAnnoucementRequest {
   color: string;
   price: number;
   description: string;
+  images?: string[];
   is_bargain?: boolean;
   is_published?: boolean;
 }
@@ -21,6 +24,7 @@ export interface IAnnoucementPatchRequest {
   mileage?: number;
   color?: string;
   price?: number;
+  images?: string[];
   description?: string;
   is_bargain?: boolean;
   is_published?: boolean;
@@ -37,6 +41,7 @@ export interface IAnnoucementResponse {
   color: string;
   price: number;
   description: string;
+  images: Image[];
   is_bargain: boolean;
   is_published: boolean;
   created_at: Date;

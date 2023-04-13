@@ -1,5 +1,6 @@
 import AppDataSource from "../data-source";
 import { Annoucement } from "../Entities/annoucement.entity";
+import { Image } from "../Entities/image.entity";
 import { AppError } from "../Errors/error";
 import {
   IAnnoucementRequest,
@@ -11,10 +12,21 @@ export const createAnnoucementService = async (
   data: IAnnoucementRequest
 ): Promise<IAnnoucementResponse> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const imagesRepository = AppDataSource.getRepository(Image);
 
-  const createdAnnoucement = annoucementRepository.create(data);
+  const { images, ...annoucement } = data;
+
+  const createdAnnoucement = annoucementRepository.create(annoucement);
 
   await annoucementRepository.save(createdAnnoucement);
+
+  images?.forEach(async (image) => {
+    const createdImages = imagesRepository.create({
+      url: image,
+      annoucement: createdAnnoucement,
+    });
+    await imagesRepository.save(createdImages);
+  });
 
   return createdAnnoucement;
 };
@@ -60,15 +72,16 @@ export const retrieveAnnoucementService = async (
   request: Request
 ): Promise<IAnnoucementResponse> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
-  const findAnnoucement = await annoucementRepository.findOneBy({
-    id: request.params.id,
+  const findAnnoucement = await annoucementRepository.find({
+    where: { id: request.params.id },
+    relations: ["images"],
   });
 
   if (!findAnnoucement) {
     throw new AppError("Not Found", 404);
   }
 
-  return findAnnoucement;
+  return findAnnoucement[0];
 };
 
 export const deleteAnnoucementService = async (

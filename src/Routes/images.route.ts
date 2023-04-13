@@ -16,21 +16,22 @@ import {
   retriveAnnoucementController,
 } from "../Controllers/annoucement.controller";
 import patchAnnoucementShape from "../Serials/patchAnnoucements.serial";
+import { deleteImagesController } from "../Controllers/images.controller";
 
-const annoucementsRouter = Router();
+const imagesRouter = Router();
 
-annoucementsRouter.get(`/api/anoucements`, listAnnoucementController);
-annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
-annoucementsRouter.post(
-  `/api/anoucements`,
-  validateSchemaMiddleware(createAnnoucementShape),
-  createAnnoucementController
-);
-annoucementsRouter.patch(
-  `/api/anoucements/:id`,
-  validateSchemaMiddleware(patchAnnoucementShape),
-  updateAnnoucementController
-);
-annoucementsRouter.delete(`/api/anoucements/:id`, deleteAnnoucementController);
+// annoucementsRouter.get(`/api/anoucements`, listAnnoucementController);
+// annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
+// annoucementsRouter.post(
+//   `/api/anoucements`,
+//   validateSchemaMiddleware(createAnnoucementShape),
+//   createAnnoucementController
+// );
+// annoucementsRouter.patch(
+//   `/api/anoucements/:id`,
+//   validateSchemaMiddleware(patchAnnoucementShape),
+//   updateAnnoucementController
+// );
+imagesRouter.delete(`/api/images/:id`, deleteImagesController);
 
-export default annoucementsRouter;
+export default imagesRouter;

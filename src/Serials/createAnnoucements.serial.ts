@@ -13,6 +13,7 @@ const createAnnoucementShape: Schema<IAnnoucementRequest> = yup.object().shape({
   color: yup.string().required(),
   price: yup.number().required(),
   description: yup.string().required(),
+  images: yup.array(),
   is_bargain: yup.boolean(),
   is_published: yup.boolean(),
 });

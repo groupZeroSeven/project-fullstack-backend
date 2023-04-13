@@ -7,6 +7,8 @@ import { Annoucemigration1681138479583 } from "./Migrations/1681138479583-Annouc
 import { banner1681232088826 } from "./Migrations/1681232088826-banner";
 import { unique1681232347779 } from "./Migrations/1681232347779-unique";
 import { default1681392681078 } from "./Migrations/1681392681078-default";
+import { Image } from "./Entities/image.entity";
+import { images1681407815375 } from "./Migrations/1681407815375-images";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -25,12 +27,13 @@ const AppDataSource = new DataSource(
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
-        entities: [User, Annoucement],
+        entities: [User, Annoucement, Image],
         migrations: [
           Annoucemigration1681138479583,
           banner1681232088826,
           unique1681232347779,
           default1681392681078,
+          images1681407815375,
         ],
       }
 );
