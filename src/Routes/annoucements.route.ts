@@ -13,12 +13,13 @@ import {
   createAnnoucementController,
   updateAnnoucementController,
   deleteAnnoucementController,
+  retriveAnnoucementController,
 } from "../Controllers/annoucement.controller";
 
 const annoucementsRouter = Router();
 
 annoucementsRouter.get(`/api/anoucements`, listAnnoucementController);
-// annoucementsRouter.get(`/api/profile`, ensureAuthMiddleware, retriveUserController);
+annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
 annoucementsRouter.post(
   `/api/anoucements`,
   validateSchemaMiddleware(createAnnoucementShape),

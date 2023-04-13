@@ -56,6 +56,21 @@ export const listAnnoucementService = async (
   return annoucements;
 };
 
+export const retrieveAnnoucementService = async (
+  request: Request
+): Promise<IAnnoucementResponse> => {
+  const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const findAnnoucement = await annoucementRepository.findOneBy({
+    id: request.params.id,
+  });
+
+  if (!findAnnoucement) {
+    throw new AppError("Not Found", 404);
+  }
+
+  return findAnnoucement;
+};
+
 export const deleteAnnoucementService = async (
   request: Request
 ): Promise<number> => {

@@ -3,6 +3,7 @@ import {
   listAnnoucementService,
   updateAnnoucementService,
   deleteAnnoucementService,
+  retrieveAnnoucementService,
 } from "../Services/annoucements.services";
 import { Request, Response } from "express";
 
@@ -20,6 +21,14 @@ export const listAnnoucementController = async (
 ) => {
   const annoucements = await listAnnoucementService(request);
   return response.status(200).json(annoucements);
+};
+
+export const retriveAnnoucementController = async (
+  request: Request,
+  response: Response
+) => {
+  const annoucement = await retrieveAnnoucementService(request);
+  return response.status(200).json(annoucement);
 };
 
 export const updateAnnoucementController = async (
