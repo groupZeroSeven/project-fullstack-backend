@@ -12,6 +12,8 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Address } from "./addresses.entity";
+import { Comments } from "./comments.entitiy";
+import { Annoucement } from "./annoucement.entity";
 
 @Entity("users")
 export class User {
@@ -54,4 +56,10 @@ export class User {
   hashPassword() {
     this.password = hashSync(this.password, 10);
   }
+
+  @OneToMany(() => Comments, (comments) => comments.user)
+  comments: Comments[];
+
+  @OneToMany(() => Annoucement, (annoucement) => annoucement.user)
+  annoucement: Annoucement[];
 }

@@ -5,7 +5,7 @@ import { User } from "./Entities/user.entity";
 import { Annoucement } from "./Entities/annoucement.entity";
 import { Image } from "./Entities/image.entity";
 import { Address } from "./Entities/addresses.entity";
-import { Users1681571634616 } from "./Migrations/1681571634616-Users";
+import { Comments } from "./Entities/comments.entitiy";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -24,8 +24,8 @@ const AppDataSource = new DataSource(
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
-        entities: [User, Annoucement, Image, Address],
-        migrations: [Users1681571634616],
+        entities: [User, Annoucement, Image, Address, Comments],
+        migrations: [__dirname + "/migrations/*.ts"],
       }
 );
 
