@@ -20,20 +20,20 @@ const loginUserService = async ({
     throw new AppError("User or password invalid", 400);
   }
 
-  if (user.isActive === false) {
-    throw new AppError("User or password invalid", 400);
-  }
-
   const passwordMatch = await compare(password, user.password);
 
   if (!passwordMatch) {
     throw new AppError("User or password invalid", 403);
   }
 
-  const token = jwt.sign({ type: user.isAdm }, String(process.env.SECRET_KEY), {
-    subject: String(user.id),
-    expiresIn: "24h",
-  });
+  const token = jwt.sign(
+    { type: user.is_seller },
+    String(process.env.SECRET_KEY),
+    {
+      subject: String(user.id),
+      expiresIn: "24h",
+    }
+  );
 
   return token;
 };

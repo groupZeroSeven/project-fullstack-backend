@@ -8,7 +8,10 @@ import {
   BeforeInsert,
   BeforeUpdate,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
+import { Address } from "./addresses.entity";
 
 @Entity("users")
 export class User {
@@ -27,17 +30,24 @@ export class User {
   @Column()
   phone: string;
 
-  @Column()
-  isAdm: boolean;
+  @Column({ length: 50, unique: true })
+  cpf: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ default: false })
+  is_seller: boolean;
+
+  @Column()
+  birth_date: Date;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToOne(() => Address, { onDelete: "CASCADE" })
+  @JoinColumn()
+  address: Address;
 
   @BeforeUpdate()
   @BeforeInsert()
