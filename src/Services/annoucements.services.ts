@@ -78,6 +78,42 @@ export const updateAnnoucementService = async (
   throw new AppError("Permission denied", 403);
 };
 
+export const listAnnoucementUserService = async (
+  request: Request
+): Promise<IAnnoucementListResult> => {
+  const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const userRepository = AppDataSource.getRepository(User);
+  const perPage = 16;
+  const page = request.query.page || 1;
+
+  const userExist = await userRepository.find({
+    where: { id: request.params.id },
+    relations: {
+      annoucement: true,
+    },
+  });
+
+  if (!userExist) {
+    throw new AppError("User not found", 404);
+  }
+
+  const annoucement = userExist[0].annoucement;
+
+  const count = annoucement.length;
+
+  const findAnnoucement: Array<IAnnoucementResponse> =
+    await annoucementRepository.find({
+      take: perPage,
+      skip: (+page - 1) * perPage,
+      order: { created_at: "desc" },
+    });
+  const result = {
+    count: count,
+    data: findAnnoucement,
+  };
+  return result;
+};
+
 export const listAnnoucementService = async (
   request: Request
 ): Promise<IAnnoucementListResult> => {

@@ -14,6 +14,7 @@ import {
   updateAnnoucementController,
   deleteAnnoucementController,
   retriveAnnoucementController,
+  listAnnoucementUserController,
 } from "../Controllers/annoucement.controller";
 import patchAnnoucementShape from "../Serials/patchAnnoucements.serial";
 
@@ -21,6 +22,10 @@ const annoucementsRouter = Router();
 
 annoucementsRouter.get(`/api/anoucements`, listAnnoucementController);
 annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
+annoucementsRouter.get(
+  `/api/anoucementUser/:id`,
+  listAnnoucementUserController
+);
 annoucementsRouter.post(
   `/api/anoucements`,
   ensureAuthMiddleware,

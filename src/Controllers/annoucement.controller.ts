@@ -4,6 +4,7 @@ import {
   updateAnnoucementService,
   deleteAnnoucementService,
   retrieveAnnoucementService,
+  listAnnoucementUserService,
 } from "../Services/annoucements.services";
 import { Request, Response } from "express";
 
@@ -23,6 +24,15 @@ export const listAnnoucementController = async (
   response: Response
 ) => {
   const annoucements = await listAnnoucementService(request);
+  return response.status(200).json(annoucements);
+};
+
+export const listAnnoucementUserController = async (
+  request: Request,
+  response: Response
+) => {
+  console.log("user.annoucement");
+  const annoucements = await listAnnoucementUserService(request);
   return response.status(200).json(annoucements);
 };
 
