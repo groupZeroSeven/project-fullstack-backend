@@ -12,6 +12,8 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Address } from "./addresses.entity";
+import { Annoucement } from "./annoucement.entity";
+import { Comments } from "./comments.entity";
 
 @Entity("users")
 export class User {
@@ -29,6 +31,9 @@ export class User {
 
   @Column()
   phone: string;
+
+  @Column()
+  description: string;
 
   @Column({ length: 50, unique: true })
   cpf: string;
@@ -54,4 +59,14 @@ export class User {
   hashPassword() {
     this.password = hashSync(this.password, 10);
   }
+
+  @OneToMany(() => Comments, (comments) => comments.user, {
+    onDelete: "CASCADE",
+  })
+  comments: Comments[];
+
+  @OneToMany(() => Annoucement, (annoucement) => annoucement.user, {
+    onDelete: "CASCADE",
+  })
+  annoucement: Annoucement[];
 }

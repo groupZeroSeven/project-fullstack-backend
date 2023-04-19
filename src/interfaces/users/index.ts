@@ -1,4 +1,6 @@
 import { Address } from "../../Entities/addresses.entity";
+import { Annoucement } from "../../Entities/annoucement.entity";
+import { Comments } from "../../Entities/comments.entity";
 
 export interface IAddressRequest {
   cep: string;
@@ -15,6 +17,7 @@ export interface IUserRequest {
   password: string;
   phone: string;
   cpf: string;
+  description: string;
   is_seller: boolean;
   birth_date: Date;
   address: IAddressRequest;
@@ -32,10 +35,13 @@ export interface IUserResponse {
   email: string;
   is_seller: boolean;
   phone: string;
+  description: string;
   cpf: string;
   createdAt: Date;
   updatedAt: Date;
   address: Address;
+  comments: Comments[];
+  annoucement: Annoucement[];
 }
 
 export interface IUser {
@@ -46,6 +52,7 @@ export interface IUser {
   is_seller: boolean;
   phone: string;
   cpf: string;
+  description: string;
   createdAt: Date;
   updatedAt: Date;
   address: IAddressRequest;
@@ -55,6 +62,7 @@ export interface IUserUpdate {
   name?: string | null;
   phone?: string | null;
   birth_date?: Date | null;
+  description?: string | null;
   cpf?: string | null;
   email?: string | null;
   password?: string | null;

@@ -9,6 +9,7 @@ const createUserShape: Schema<IUserRequest> = yup.object().shape({
   password: yup.string().required(),
   phone: yup.string().required(),
   cpf: yup.string().required(),
+  description: yup.string().required(),
   is_seller: yup.boolean().required(),
   birth_date: yup.date().required(),
   address: addressSchema,

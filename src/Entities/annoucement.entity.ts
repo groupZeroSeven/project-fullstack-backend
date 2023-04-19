@@ -5,8 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Image } from "./image.entity";
+import { User } from "./user.entity";
+import { Comments } from "./comments.entity";
 
 @Entity("annoucements")
 export class Annoucement {
@@ -24,6 +28,9 @@ export class Annoucement {
 
   @Column({ length: 120 })
   year: string;
+
+  @Column({ length: 120 })
+  fip: string;
 
   @Column()
   fuel: string;
@@ -54,4 +61,13 @@ export class Annoucement {
 
   @OneToMany(() => Image, (image) => image.annoucement, { onDelete: "CASCADE" })
   images: Image[];
+
+  @OneToMany(() => Comments, (comments) => comments.announcement, {
+    onDelete: "CASCADE",
+  })
+  comments: Comments[];
+
+  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.annoucement, { onDelete: "CASCADE" })
+  user: User;
 }
