@@ -1,4 +1,6 @@
+import { Comments } from "../../Entities/comments.entity";
 import { Image } from "../../Entities/image.entity";
+import { User } from "../../Entities/user.entity";
 
 export interface IAnnoucementRequest {
   brand: string;
@@ -8,6 +10,7 @@ export interface IAnnoucementRequest {
   fuel: string;
   mileage: number;
   color: string;
+  fip: string;
   price: number;
   description: string;
   images?: string[];
@@ -23,6 +26,7 @@ export interface IAnnoucementPatchRequest {
   fuel?: string;
   mileage?: number;
   color?: string;
+  fip?: string;
   price?: number;
   images?: string[];
   description?: string;
@@ -40,8 +44,11 @@ export interface IAnnoucementResponse {
   mileage: number;
   color: string;
   price: number;
+  fip: string;
   description: string;
   images: Image[];
+  comments: Comments[];
+  user: User;
   is_bargain: boolean;
   is_published: boolean;
   created_at: Date;
@@ -55,6 +62,7 @@ export interface IAnnoucement {
   year: string;
   banner: string;
   fuel: string;
+  fip: string;
   mileage: number;
   color: string;
   price: number;
@@ -72,6 +80,7 @@ export interface IAnnoucementUpdate {
   banner: string;
   fuel: string;
   mileage: number;
+  fip: string;
   color: string;
   price: number;
   description: string;

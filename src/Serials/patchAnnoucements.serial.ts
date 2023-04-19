@@ -16,6 +16,7 @@ const patchAnnoucementShape: Schema = yup.object().shape({
   color: yup.string().notRequired(),
   price: yup.number().notRequired(),
   images: yup.array().notRequired(),
+  fip: yup.string().notRequired(),
   description: yup.string().notRequired(),
   is_bargain: yup.boolean().notRequired(),
   is_published: yup.boolean().notRequired(),

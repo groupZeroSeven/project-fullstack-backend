@@ -32,6 +32,9 @@ export class User {
   @Column()
   phone: string;
 
+  @Column()
+  description: string;
+
   @Column({ length: 50, unique: true })
   cpf: string;
 

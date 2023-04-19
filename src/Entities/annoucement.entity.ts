@@ -12,6 +12,7 @@ import { Image } from "./image.entity";
 import { Comments } from "./comments.entitiy";
 import { User } from "./user.entity";
 
+
 @Entity("annoucements")
 export class Annoucement {
   @PrimaryGeneratedColumn("uuid")

@@ -7,6 +7,7 @@ import {
   IAnnoucementResponse,
 } from "../interfaces/annoucements";
 import { Request } from "express";
+import { fileValidation } from "../Utils";
 
 export const createImageService = async (request: Request): Promise<Image> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
@@ -18,6 +19,11 @@ export const createImageService = async (request: Request): Promise<Image> => {
   if (!annoucement) {
     throw new AppError("Annoucement not found", 404);
   }
+
+  if (!fileValidation(request.body.url)) {
+    throw new AppError("Invalid file type", 400);
+  }
+
   const createdImages = imagesRepository.create({
     url: request.body.url,
     annoucement: annoucement,

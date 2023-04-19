@@ -11,16 +11,19 @@ export const createUserService = async (
 ): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
   const addressRepository = AppDataSource.getRepository(Address);
-  const userExist = await userRepository.findOneBy({ email: userData.email });
-
-  if (userExist) {
-    throw new AppError("email alredy exist", 409);
-  }
+  const userEmailExist = await userRepository.findOneBy({
+    email: userData.email,
+  });
+  const userCPFExist = await userRepository.findOneBy({ cpf: userData.cpf });
 
   const { address, ...user } = userData;
 
-  if (!address) {
-    throw new AppError("address error", 400);
+  if (userEmailExist) {
+    throw new AppError("email alredy exist", 409);
+  }
+
+  if (userCPFExist) {
+    throw new AppError("CPF alredy exist", 409);
   }
 
   const createdAddress = addressRepository.create(address);
@@ -76,25 +79,19 @@ export const listUserService = async (request: Request): Promise<IUser[]> => {
 
   const users = await userRepository.find();
 
-  if (request.user.type) {
-    const usersWithoutPassordPromise = users.map(async (user) => {
-      const userWoPsswd = await createUserWOShape.validate(user, {
-        stripUnknown: true,
-      });
-      return userWoPsswd;
+  const usersWithoutPassordPromise = users.map(async (user) => {
+    const userWoPsswd = await createUserWOShape.validate(user, {
+      stripUnknown: true,
     });
+    return userWoPsswd;
+  });
 
-    const usersWopassword = await Promise.all(usersWithoutPassordPromise);
+  const usersWopassword = await Promise.all(usersWithoutPassordPromise);
 
-    return usersWopassword;
-  }
-
-  throw new AppError("Permission denied", 403);
+  return usersWopassword;
 };
 
-export const retriveUserService = async (
-  request: Request
-): Promise<IUserResponse> => {
+export const retriveUserService = async (request: Request): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const userExist = await userRepository.findOne({
@@ -105,7 +102,11 @@ export const retriveUserService = async (
     throw new AppError("Permission denied", 404);
   }
 
-  return userExist;
+  const userWithoutPassord = await createUserWOShape.validate(userExist, {
+    stripUnknown: true,
+  });
+
+  return userWithoutPassord;
 };
 
 export const deleteUserService = async (request: Request): Promise<number> => {

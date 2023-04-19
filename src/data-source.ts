@@ -5,7 +5,7 @@ import { User } from "./Entities/user.entity";
 import { Annoucement } from "./Entities/annoucement.entity";
 import { Image } from "./Entities/image.entity";
 import { Address } from "./Entities/addresses.entity";
-import { Comments } from "./Entities/comments.entitiy";
+import { Comments } from "./entities/comments.entitiy";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
