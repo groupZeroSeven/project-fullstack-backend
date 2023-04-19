@@ -5,10 +5,7 @@ import { User } from "./Entities/user.entity";
 import { Annoucement } from "./Entities/annoucement.entity";
 import { Image } from "./Entities/image.entity";
 import { Address } from "./Entities/addresses.entity";
-import { Users1681571634616 } from "./Migrations/1681571634616-Users";
-import { Comments } from "./Entities/comments.entity";
-import { Patchentitys1681913638373 } from "./Migrations/1681913638373-Patchentitys";
-import { Patchcascade1681917830974 } from "./Migrations/1681917830974-Patchcascade";
+import { Comments } from "./entities/comments.entitiy";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -28,11 +25,7 @@ const AppDataSource = new DataSource(
         logging: true,
         synchronize: false,
         entities: [User, Annoucement, Image, Address, Comments],
-        migrations: [
-          Users1681571634616,
-          Patchentitys1681913638373,
-          Patchcascade1681917830974,
-        ],
+        migrations: [__dirname + "/migrations/*.ts"],
       }
 );
 

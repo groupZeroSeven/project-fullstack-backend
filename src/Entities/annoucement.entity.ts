@@ -9,8 +9,9 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Image } from "./image.entity";
+import { Comments } from "./comments.entitiy";
 import { User } from "./user.entity";
-import { Comments } from "./comments.entity";
+
 
 @Entity("annoucements")
 export class Annoucement {
@@ -62,12 +63,10 @@ export class Annoucement {
   @OneToMany(() => Image, (image) => image.annoucement, { onDelete: "CASCADE" })
   images: Image[];
 
-  @OneToMany(() => Comments, (comments) => comments.announcement, {
-    onDelete: "CASCADE",
-  })
+  @OneToMany(() => Comments, (comments) => comments.announcement)
   comments: Comments[];
 
   @JoinColumn()
-  @ManyToOne(() => User, (user) => user.annoucement, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, (user) => user.annoucement)
   user: User;
 }
