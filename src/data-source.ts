@@ -6,6 +6,7 @@ import { Annoucement } from "./Entities/annoucement.entity";
 import { Image } from "./Entities/image.entity";
 import { Address } from "./Entities/addresses.entity";
 import { Comments } from "./Entities/comments.entity";
+import { a1681926720044 } from "./Migrations/1681926720044-a";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -25,7 +26,7 @@ const AppDataSource = new DataSource(
         logging: true,
         synchronize: false,
         entities: [User, Annoucement, Image, Address, Comments],
-        migrations: [__dirname + "/migrations/*.ts"],
+        migrations: [a1681926720044],
       }
 );
 
