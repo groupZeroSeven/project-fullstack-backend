@@ -93,16 +93,20 @@ export const listUserService = async (request: Request): Promise<IUser[]> => {
 
 export const retriveUserService = async (request: Request): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
-
-  const userExist = await userRepository.findOne({
+  const userExist = await userRepository.find({
     where: { id: request.user.id },
+    relations: {
+      address: true,
+      comments: true,
+      annoucement: true,
+    },
   });
 
   if (!userExist) {
     throw new AppError("Permission denied", 404);
   }
 
-  const userWithoutPassord = await createUserWOShape.validate(userExist, {
+  const userWithoutPassord = await createUserWOShape.validate(userExist[0], {
     stripUnknown: true,
   });
 

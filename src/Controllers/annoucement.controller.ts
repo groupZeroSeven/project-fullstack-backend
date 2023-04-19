@@ -11,7 +11,10 @@ export const createAnnoucementController = async (
   request: Request,
   response: Response
 ) => {
-  const newAnnoucement = await createAnnoucementService(request.body);
+  const newAnnoucement = await createAnnoucementService(
+    request.body,
+    request.user.id
+  );
   return response.status(201).json(newAnnoucement);
 };
 

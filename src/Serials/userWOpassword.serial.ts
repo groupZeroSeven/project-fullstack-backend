@@ -2,6 +2,8 @@ import * as yup from "yup";
 import { Schema } from "yup";
 import { IUser } from "../interfaces/users";
 import addressSchema from "./createAddress.serial";
+import createAnnoucementShape from "./createAnnoucements.serial";
+import addressPatchSchema from "./createAddressPatch.serial";
 
 const createUserWOShape: Schema<IUser> = yup.object().shape({
   id: yup.string().required(),
@@ -14,7 +16,9 @@ const createUserWOShape: Schema<IUser> = yup.object().shape({
   cpf: yup.string().required(),
   createdAt: yup.date().required(),
   updatedAt: yup.date().required(),
-  address: addressSchema,
+  address: addressPatchSchema,
+  annoucement: yup.array(),
+  comments: yup.array(),
 });
 
 export default createUserWOShape;
