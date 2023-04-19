@@ -23,14 +23,20 @@ annoucementsRouter.get(`/api/anoucements`, listAnnoucementController);
 annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
 annoucementsRouter.post(
   `/api/anoucements`,
+  ensureAuthMiddleware,
   validateSchemaMiddleware(createAnnoucementShape),
   createAnnoucementController
 );
 annoucementsRouter.patch(
   `/api/anoucements/:id`,
+  ensureAuthMiddleware,
   validateSchemaMiddleware(patchAnnoucementShape),
   updateAnnoucementController
 );
-annoucementsRouter.delete(`/api/anoucements/:id`, deleteAnnoucementController);
+annoucementsRouter.delete(
+  `/api/anoucements/:id`,
+  ensureAuthMiddleware,
+  deleteAnnoucementController
+);
 
 export default annoucementsRouter;

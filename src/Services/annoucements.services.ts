@@ -1,6 +1,7 @@
 import AppDataSource from "../data-source";
 import { Annoucement } from "../Entities/annoucement.entity";
 import { Image } from "../Entities/image.entity";
+import { User } from "../Entities/user.entity";
 import { AppError } from "../Errors/error";
 import {
   IAnnoucementRequest,
@@ -9,14 +10,24 @@ import {
 import { Request } from "express";
 
 export const createAnnoucementService = async (
-  data: IAnnoucementRequest
+  data: IAnnoucementRequest,
+  requestId: string
 ): Promise<IAnnoucementResponse> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const userRepository = AppDataSource.getRepository(User);
   const imagesRepository = AppDataSource.getRepository(Image);
+  const user = await userRepository.findOneBy({ id: requestId });
 
   const { images, ...annoucement } = data;
 
-  const createdAnnoucement = annoucementRepository.create(annoucement);
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  const createdAnnoucement = annoucementRepository.create({
+    ...annoucement,
+    user,
+  });
 
   await annoucementRepository.save(createdAnnoucement);
 
@@ -28,7 +39,15 @@ export const createAnnoucementService = async (
     await imagesRepository.save(createdImages);
   });
 
-  return createdAnnoucement;
+  const returnAnnoucement = await annoucementRepository.findOneBy({
+    id: createdAnnoucement.id,
+  });
+
+  if (!returnAnnoucement) {
+    throw new AppError("User not found", 404);
+  }
+
+  return returnAnnoucement;
 };
 
 export const updateAnnoucementService = async (

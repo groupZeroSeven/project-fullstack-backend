@@ -55,7 +55,9 @@ export interface IUser {
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  address: IAddressRequest;
+  address?: IAddressRequest;
+  annoucement?: Annoucement[];
+  comments?: Comments[];
 }
 
 export interface IUserUpdate {

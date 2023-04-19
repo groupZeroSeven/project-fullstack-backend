@@ -28,6 +28,7 @@ const imagesRouter = Router();
 // annoucementsRouter.get(`/api/anoucements/:id`, retriveAnnoucementController);
 imagesRouter.post(
   `/api/images/:id`,
+  ensureAuthMiddleware,
   validateSchemaMiddleware(createImageShape),
   createImageController
 );
