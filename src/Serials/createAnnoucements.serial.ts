@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IUserRequest } from "../interfaces/users";
-import { IAnnoucementRequest } from "../interfaces/annoucements";
+import { IUserRequest } from "../Interfaces/users";
+import { IAnnoucementRequest } from "../Interfaces/annoucements";
 
 const createAnnoucementShape: Schema<IAnnoucementRequest> = yup.object().shape({
   brand: yup.string().required(),

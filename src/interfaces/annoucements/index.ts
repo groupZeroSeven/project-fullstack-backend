@@ -18,6 +18,11 @@ export interface IAnnoucementRequest {
   is_published?: boolean;
 }
 
+export interface IAnnoucementListResult {
+  count: number;
+  data: IAnnoucementResponse[];
+}
+
 export interface IAnnoucementPatchRequest {
   brand?: string;
   model?: string;

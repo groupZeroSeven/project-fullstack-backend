@@ -9,9 +9,8 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Image } from "./image.entity";
-import { Comments } from "./comments.entitiy";
+import { Comments } from "./comments.entity";
 import { User } from "./user.entity";
-
 
 @Entity("annoucements")
 export class Annoucement {

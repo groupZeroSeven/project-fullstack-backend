@@ -2,7 +2,7 @@ import AppDataSource from "../data-source";
 import { Address } from "../Entities/addresses.entity";
 import { User } from "../Entities/user.entity";
 import { AppError } from "../Errors/error";
-import { IUserRequest, IUser, IUserResponse } from "../interfaces/users";
+import { IUserRequest, IUser, IUserResponse } from "../Interfaces/users";
 import createUserWOShape from "../Serials/userWOpassword.serial";
 import { Request } from "express";
 

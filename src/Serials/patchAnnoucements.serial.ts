@@ -1,10 +1,10 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IUserRequest } from "../interfaces/users";
+import { IUserRequest } from "../Interfaces/users";
 import {
   IAnnoucementPatchRequest,
   IAnnoucementRequest,
-} from "../interfaces/annoucements";
+} from "../Interfaces/annoucements";
 
 const patchAnnoucementShape: Schema = yup.object().shape({
   brand: yup.string().notRequired(),

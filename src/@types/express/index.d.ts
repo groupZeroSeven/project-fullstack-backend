@@ -1,7 +1,7 @@
-import { ICategoryRequest } from "../../interfaces/contacts";
-import { IPropertyRequest } from "../../interfaces/properties";
-import { IScheduleRequest } from "../../interfaces/schedules";
-import { IUserRequest } from "../../interfaces/users";
+import { ICategoryRequest } from "../../Interfaces/contacts";
+import { IPropertyRequest } from "../../Interfaces/properties";
+import { IScheduleRequest } from "../../Interfaces/schedules";
+import { IUserRequest } from "../../Interfaces/users";
 
 declare global {
   namespace Express {

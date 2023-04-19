@@ -12,8 +12,8 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Address } from "./addresses.entity";
-import { Comments } from "./comments.entitiy";
 import { Annoucement } from "./annoucement.entity";
+import { Comments } from "./comments.entity";
 
 @Entity("users")
 export class User {

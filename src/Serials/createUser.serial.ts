@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IUserRequest } from "../interfaces/users";
+import { IUserRequest } from "../Interfaces/users";
 import addressSchema from "./createAddress.serial";
 
 const createUserShape: Schema<IUserRequest> = yup.object().shape({

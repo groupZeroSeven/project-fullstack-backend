@@ -5,7 +5,7 @@ import { AppError } from "../Errors/error";
 import {
   IAnnoucementRequest,
   IAnnoucementResponse,
-} from "../interfaces/annoucements";
+} from "../Interfaces/annoucements";
 import { Request } from "express";
 import { fileValidation } from "../Utils";
 

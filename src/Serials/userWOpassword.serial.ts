@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IUser } from "../interfaces/users";
+import { IUser } from "../Interfaces/users";
 import addressSchema from "./createAddress.serial";
 import createAnnoucementShape from "./createAnnoucements.serial";
 import addressPatchSchema from "./createAddressPatch.serial";

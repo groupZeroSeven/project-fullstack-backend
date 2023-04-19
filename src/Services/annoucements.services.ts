@@ -4,9 +4,10 @@ import { Image } from "../Entities/image.entity";
 import { User } from "../Entities/user.entity";
 import { AppError } from "../Errors/error";
 import {
+  IAnnoucementListResult,
   IAnnoucementRequest,
   IAnnoucementResponse,
-} from "../interfaces/annoucements";
+} from "../Interfaces/annoucements";
 import { Request } from "express";
 
 export const createAnnoucementService = async (
@@ -79,12 +80,25 @@ export const updateAnnoucementService = async (
 
 export const listAnnoucementService = async (
   request: Request
-): Promise<IAnnoucementResponse[]> => {
+): Promise<IAnnoucementListResult> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
+  const perPage = 12;
+  const page = request.query.page || 1;
 
   const annoucements = await annoucementRepository.find();
+  const count = annoucements.length;
 
-  return annoucements;
+  const findAnnoucement: Array<IAnnoucementResponse> =
+    await annoucementRepository.find({
+      take: perPage,
+      skip: (+page - 1) * perPage,
+      order: { created_at: "desc" },
+    });
+  const result = {
+    count: count,
+    data: findAnnoucement,
+  };
+  return result;
 };
 
 export const retrieveAnnoucementService = async (

@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IAddressRequest, IUserRequest } from "../interfaces/users";
+import { IAddressRequest, IUserRequest } from "../Interfaces/users";
 
 const addressPatchSchema: Schema = yup.object().shape({
   cep: yup.string(),

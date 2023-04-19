@@ -4,7 +4,7 @@ import { User } from "../Entities/user.entity";
 import jwt from "jsonwebtoken";
 import { compare } from "bcryptjs";
 import { AppError } from "../Errors/error";
-import { IUserLogin } from "../interfaces/users";
+import { IUserLogin } from "../Interfaces/users";
 
 const loginUserService = async ({
   email,
