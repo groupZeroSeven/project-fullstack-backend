@@ -62,10 +62,12 @@ export class Annoucement {
   @OneToMany(() => Image, (image) => image.annoucement, { onDelete: "CASCADE" })
   images: Image[];
 
-  @OneToMany(() => Comments, (comments) => comments.announcement)
+  @OneToMany(() => Comments, (comments) => comments.announcement, {
+    onDelete: "CASCADE",
+  })
   comments: Comments[];
 
   @JoinColumn()
-  @ManyToOne(() => User, (user) => user.annoucement)
+  @ManyToOne(() => User, (user) => user.annoucement, { onDelete: "CASCADE" })
   user: User;
 }

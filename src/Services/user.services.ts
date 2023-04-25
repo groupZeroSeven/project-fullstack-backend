@@ -53,7 +53,7 @@ export const updateUserService = async (request: Request): Promise<IUser> => {
     throw new AppError("User not found", 404);
   }
 
-  if (request.user.type || request.params.id === findUser.id) {
+  if (request.user.id === findUser.id) {
     const updatedUser = userRepository.create({
       ...findUser,
       ...request.body,

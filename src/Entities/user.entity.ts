@@ -60,9 +60,13 @@ export class User {
     this.password = hashSync(this.password, 10);
   }
 
-  @OneToMany(() => Comments, (comments) => comments.user)
+  @OneToMany(() => Comments, (comments) => comments.user, {
+    onDelete: "CASCADE",
+  })
   comments: Comments[];
 
-  @OneToMany(() => Annoucement, (annoucement) => annoucement.user)
+  @OneToMany(() => Annoucement, (annoucement) => annoucement.user, {
+    onDelete: "CASCADE",
+  })
   annoucement: Annoucement[];
 }

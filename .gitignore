@@ -2,5 +2,4 @@ node_modules/
 dist/
 yarn.lock
 .env
-json.lock
-package-lock.json
+package-lock.json/
