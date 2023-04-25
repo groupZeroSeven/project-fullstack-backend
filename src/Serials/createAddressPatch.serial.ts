@@ -1,8 +1,12 @@
 import * as yup from "yup";
 import { Schema } from "yup";
-import { IAddressRequest, IUserRequest } from "../Interfaces/users";
+import {
+  IAddressPatch,
+  IAddressRequest,
+  IUserRequest,
+} from "../Interfaces/users";
 
-const addressPatchSchema: Schema = yup.object().shape({
+const addressPatchSchema: Schema<IAddressPatch> = yup.object().shape({
   cep: yup.string(),
   state: yup.string(),
   city: yup.string(),

@@ -11,6 +11,15 @@ export interface IAddressRequest {
   complement?: string;
 }
 
+export interface IAddressPatch {
+  cep?: string | null;
+  state?: string | null;
+  city?: string | null;
+  number?: string | null;
+  road?: string | null;
+  complement?: string | null;
+}
+
 export interface IUserRequest {
   name: string;
   email: string;
@@ -55,7 +64,7 @@ export interface IUser {
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  address?: IAddressRequest;
+  address?: IAddressPatch | null;
   annoucement?: Annoucement[];
   comments?: Comments[];
 }
@@ -68,5 +77,5 @@ export interface IUserUpdate {
   cpf?: string | null;
   email?: string | null;
   password?: string | null;
-  address?: IAddressRequest | null;
+  address?: IAddressPatch | null;
 }

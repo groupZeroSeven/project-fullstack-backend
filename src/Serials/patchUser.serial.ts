@@ -1,7 +1,6 @@
 import * as yup from "yup";
 import { Schema } from "yup";
 import { IUserUpdate } from "../Interfaces/users";
-import addressSchema from "./createAddress.serial";
 import addressPatchSchema from "./createAddressPatch.serial";
 
 const patchUserShape: Schema<IUserUpdate> = yup.object().shape({
@@ -11,7 +10,7 @@ const patchUserShape: Schema<IUserUpdate> = yup.object().shape({
   cpf: yup.string().notRequired(),
   birth_date: yup.date().notRequired(),
   password: yup.string().notRequired(),
-  address: addressPatchSchema,
+  address: addressPatchSchema.notRequired(),
 });
 
 export default patchUserShape;

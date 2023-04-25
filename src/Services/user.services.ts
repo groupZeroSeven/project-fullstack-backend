@@ -44,15 +44,31 @@ export const createUserService = async (
 
 export const updateUserService = async (request: Request): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
+  const addressRepository = AppDataSource.getRepository(Address);
 
-  const findUser = await userRepository.findOneBy({
-    id: request.params.id,
+  const findUser = await userRepository.findOne({
+    where: { id: request.params.id },
+    relations: {
+      address: true,
+      comments: true,
+      annoucement: true,
+    },
   });
 
   if (!findUser) {
     throw new AppError("User not found", 404);
   }
 
+  const keys = Object.keys(request.body.address);
+  console.log(keys.length);
+  if (keys.length > 0 && request.user.id === findUser.id) {
+    const updatedAddress = addressRepository.create({
+      ...findUser.address,
+      ...request.body.address,
+    });
+
+    await addressRepository.save(updatedAddress);
+  }
   if (request.user.id === findUser.id) {
     const updatedUser = userRepository.create({
       ...findUser,
@@ -61,8 +77,17 @@ export const updateUserService = async (request: Request): Promise<IUser> => {
 
     await userRepository.save(updatedUser);
 
+    const userExist = await userRepository.find({
+      where: { id: findUser.id },
+      relations: {
+        address: true,
+        comments: true,
+        annoucement: true,
+      },
+    });
+
     const updatedUserWithoutPassword = await createUserWOShape.validate(
-      updatedUser,
+      userExist[0],
       {
         stripUnknown: true,
       }
