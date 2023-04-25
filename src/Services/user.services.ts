@@ -60,7 +60,7 @@ export const updateUserService = async (request: Request): Promise<IUser> => {
   }
 
   const keys = Object.keys(request.body.address);
-  console.log(keys.length);
+
   if (keys.length > 0 && request.user.id === findUser.id) {
     const updatedAddress = addressRepository.create({
       ...findUser.address,
