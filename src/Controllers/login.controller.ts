@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import loginUserService from "../Services/login.services";
+import recoverPasswordService from "../Services/recoverPassword.services";
 
-export const loginUsersController = async (
+export const recoverpasswordController = async (
   request: Request,
   response: Response
 ) => {
-  const logUser = await loginUserService(request.body);
-  return response.status(200).json({ token: logUser });
+  const res = await recoverPasswordService(request.body);
+  return response.status(200).json({ message: res });
 };
