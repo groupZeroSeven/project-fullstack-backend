@@ -69,6 +69,23 @@ export interface IUser {
   comments?: Comments[];
 }
 
+export interface IUserWOpassword {
+  id: string;
+  name: string;
+  email: string;
+  birth_date: Date;
+  is_seller: boolean;
+  phone: string;
+  cpf: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  password?: string;
+  address?: IAddressPatch | null;
+  annoucement?: Annoucement[];
+  comments?: Comments[];
+}
+
 export interface IUserUpdate {
   name?: string | null;
   phone?: string | null;

@@ -1,6 +1,7 @@
 import { Comments } from "../../Entities/comments.entity";
 import { Image } from "../../Entities/image.entity";
 import { User } from "../../Entities/user.entity";
+import { IUser } from "../users";
 
 export interface IAnnoucementRequest {
   brand: string;
@@ -53,7 +54,7 @@ export interface IAnnoucementResponse {
   description: string;
   images: Image[];
   comments: Comments[];
-  user: User;
+  user: IUser;
   is_bargain: boolean;
   is_published: boolean;
   created_at: Date;

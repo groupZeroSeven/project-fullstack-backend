@@ -9,6 +9,8 @@ import {
   IAnnoucementResponse,
 } from "../Interfaces/annoucements";
 import { Request } from "express";
+import createUserWOShape from "../Serials/userWOpassword.serial";
+import { IUserWOpassword } from "../Interfaces/users";
 
 export const createAnnoucementService = async (
   data: IAnnoucementRequest,
@@ -143,14 +145,18 @@ export const retrieveAnnoucementService = async (
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const findAnnoucement = await annoucementRepository.find({
     where: { id: request.params.id },
-    relations: ["images", "user", "comments"],
+    relations: ["images", "user", "comments", "user.address"],
   });
 
   if (!findAnnoucement) {
     throw new AppError("Not Found", 404);
   }
 
-  return findAnnoucement[0];
+  const newUser = await createUserWOShape.validate(findAnnoucement[0].user, {
+    stripUnknown: true,
+  });
+
+  return { ...findAnnoucement[0], user: newUser };
 };
 
 export const deleteAnnoucementService = async (
