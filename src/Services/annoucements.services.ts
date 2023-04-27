@@ -148,7 +148,7 @@ export const retrieveAnnoucementService = async (
     relations: ["images", "user", "comments", "user.address"],
   });
 
-  if (!findAnnoucement) {
+  if (!findAnnoucement[0]) {
     throw new AppError("Not Found", 404);
   }
 
