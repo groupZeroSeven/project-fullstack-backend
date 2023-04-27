@@ -5,6 +5,6 @@ export const recoverpasswordController = async (
   request: Request,
   response: Response
 ) => {
-  const res = await recoverPasswordService(request.body);
+  const res = await recoverPasswordService(request.body.email);
   return response.status(200).json({ message: res });
 };
