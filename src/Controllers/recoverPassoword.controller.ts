@@ -5,6 +5,6 @@ export const loginUsersController = async (
   request: Request,
   response: Response
 ) => {
-  const logUser = await loginUserService(request.body.email);
+  const logUser = await loginUserService(request.body);
   return response.status(200).json({ token: logUser });
 };

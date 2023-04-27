@@ -143,7 +143,7 @@ export const retrieveAnnoucementService = async (
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const findAnnoucement = await annoucementRepository.find({
     where: { id: request.params.id },
-    relations: ["images"],
+    relations: ["images", "user", "comments"],
   });
 
   if (!findAnnoucement) {
