@@ -129,6 +129,7 @@ export const listAnnoucementService = async (
       take: perPage,
       skip: (+page - 1) * perPage,
       order: { created_at: "desc" },
+      relations: { user: true },
     });
   const result = {
     count: count,
