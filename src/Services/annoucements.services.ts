@@ -109,6 +109,7 @@ export const listAnnoucementUserService = async (
       skip: (+page - 1) * perPage,
       order: { created_at: "desc" },
       where: { user: { id: userExist[0].id } },
+      relations: { user: true },
     });
   const result = {
     count: count,
