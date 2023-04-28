@@ -80,9 +80,7 @@ export const updateAnnoucementService = async (
   throw new AppError("Permission denied", 403);
 };
 
-export const listAnnoucementUserService = async (
-  request: Request
-): Promise<IAnnoucementListResult> => {
+export const listAnnoucementUserService = async (request: Request) => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const userRepository = AppDataSource.getRepository(User);
   const perPage = 16;
@@ -93,9 +91,12 @@ export const listAnnoucementUserService = async (
     relations: {
       annoucement: true,
     },
+    take: perPage,
+    skip: (+page - 1) * perPage,
+    order: { createdAt: "desc" },
   });
 
-  if (!userExist) {
+  if (!userExist[0]) {
     throw new AppError("User not found", 404);
   }
 
@@ -103,15 +104,19 @@ export const listAnnoucementUserService = async (
 
   const count = annoucement.length;
 
-  const findAnnoucement: Array<IAnnoucementResponse> =
-    await annoucementRepository.find({
-      take: perPage,
-      skip: (+page - 1) * perPage,
-      order: { created_at: "desc" },
-    });
+  // const findAnnoucement: Array<IAnnoucementResponse> =
+  //   await annoucementRepository.find({
+  //     where: { userId: userExist[0] },
+  //     relations: {
+  //       user: true,
+  //     },
+  //     take: perPage,
+  //     skip: (+page - 1) * perPage,
+  //     order: { created_at: "desc" },
+  //   });
   const result = {
     count: count,
-    data: findAnnoucement,
+    data: userExist[0],
   };
   return result;
 };
