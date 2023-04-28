@@ -90,6 +90,7 @@ export const listAnnoucementUserService = async (
 
   const userExist = await userRepository.find({
     where: { id: request.params.id },
+    relations: { address: true, comments: true },
   });
 
   if (!userExist) {
