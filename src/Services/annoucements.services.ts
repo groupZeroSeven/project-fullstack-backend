@@ -90,18 +90,11 @@ export const listAnnoucementUserService = async (
 
   const userExist = await userRepository.find({
     where: { id: request.params.id },
-    relations: {
-      annoucement: true,
-    },
   });
 
   if (!userExist) {
     throw new AppError("User not found", 404);
   }
-
-  const annoucement = userExist[0].annoucement;
-
-  const count = annoucement.length;
 
   const findAnnoucement: Array<IAnnoucementResponse> =
     await annoucementRepository.find({
@@ -109,11 +102,15 @@ export const listAnnoucementUserService = async (
       skip: (+page - 1) * perPage,
       order: { created_at: "desc" },
       where: { user: { id: userExist[0].id } },
-      relations: { user: true },
     });
+
+  const UserWithoutPassword = await createUserWOShape.validate(userExist[0], {
+    stripUnknown: true,
+  });
+
   const result = {
-    count: count,
-    data: findAnnoucement,
+    count: findAnnoucement.length,
+    data: { user: UserWithoutPassword, ...findAnnoucement },
   };
   return result;
 };
