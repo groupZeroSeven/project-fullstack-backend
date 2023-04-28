@@ -80,9 +80,7 @@ export const updateAnnoucementService = async (
   throw new AppError("Permission denied", 403);
 };
 
-export const listAnnoucementUserService = async (
-  request: Request
-): Promise<IAnnoucementListResult> => {
+export const listAnnoucementUserService = async (request: Request) => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const userRepository = AppDataSource.getRepository(User);
   const perPage = 16;
@@ -111,7 +109,7 @@ export const listAnnoucementUserService = async (
 
   const result = {
     count: findAnnoucement.length,
-    data: { user: UserWithoutPassword, ...findAnnoucement },
+    data: { user: UserWithoutPassword, annoucements: findAnnoucement },
   };
   return result;
 };
