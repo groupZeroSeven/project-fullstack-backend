@@ -26,6 +26,7 @@ const AppDataSource = new DataSource(
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
+        ssl: Boolean(process.env.SSLMODE),
         entities: [User, Annoucement, Image, Address, Comments],
         migrations: [a1681926720044, cascade1682421781005],
       }
