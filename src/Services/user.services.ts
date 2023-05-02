@@ -1,7 +1,8 @@
 import AppDataSource from "../data-source";
+import { Address } from "../Entities/addresses.entity";
 import { User } from "../Entities/user.entity";
 import { AppError } from "../Errors/error";
-import { IUserRequest, IUser, IUserResponse } from "../interfaces/users";
+import { IUserRequest, IUser, IUserResponse } from "../Interfaces/users";
 import createUserWOShape from "../Serials/userWOpassword.serial";
 import { Request } from "express";
 
@@ -9,12 +10,28 @@ export const createUserService = async (
   userData: IUserRequest
 ): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userExist = await userRepository.findOneBy({ email: userData.email });
+  const addressRepository = AppDataSource.getRepository(Address);
+  const userEmailExist = await userRepository.findOneBy({
+    email: userData.email,
+  });
+  const userCPFExist = await userRepository.findOneBy({ cpf: userData.cpf });
 
-  if (userExist) {
+  const { address, ...user } = userData;
+
+  if (userEmailExist) {
     throw new AppError("email alredy exist", 409);
   }
-  const createdUser = userRepository.create(userData);
+
+  if (userCPFExist) {
+    throw new AppError("CPF alredy exist", 409);
+  }
+
+  const createdAddress = addressRepository.create(address);
+  await addressRepository.save(createdAddress);
+  const createdUser = userRepository.create({
+    ...user,
+    address: createdAddress,
+  });
 
   await userRepository.save(createdUser);
 
@@ -27,16 +44,32 @@ export const createUserService = async (
 
 export const updateUserService = async (request: Request): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
+  const addressRepository = AppDataSource.getRepository(Address);
 
-  const findUser = await userRepository.findOneBy({
-    id: request.params.id,
+  const findUser = await userRepository.findOne({
+    where: { id: request.params.id },
+    relations: {
+      address: true,
+      comments: true,
+      annoucement: true,
+    },
   });
 
   if (!findUser) {
     throw new AppError("User not found", 404);
   }
 
-  if (request.user.type || request.params.id === findUser.id) {
+  const keys = Object.keys(request.body.address);
+
+  if (keys.length > 0 && request.user.id === findUser.id) {
+    const updatedAddress = addressRepository.create({
+      ...findUser.address,
+      ...request.body.address,
+    });
+
+    await addressRepository.save(updatedAddress);
+  }
+  if (request.user.id === findUser.id) {
     const updatedUser = userRepository.create({
       ...findUser,
       ...request.body,
@@ -44,8 +77,17 @@ export const updateUserService = async (request: Request): Promise<IUser> => {
 
     await userRepository.save(updatedUser);
 
+    const userExist = await userRepository.find({
+      where: { id: findUser.id },
+      relations: {
+        address: true,
+        comments: true,
+        annoucement: true,
+      },
+    });
+
     const updatedUserWithoutPassword = await createUserWOShape.validate(
-      updatedUser,
+      userExist[0],
       {
         stripUnknown: true,
       }
@@ -62,36 +104,38 @@ export const listUserService = async (request: Request): Promise<IUser[]> => {
 
   const users = await userRepository.find();
 
-  if (request.user.type) {
-    const usersWithoutPassordPromise = users.map(async (user) => {
-      const userWoPsswd = await createUserWOShape.validate(user, {
-        stripUnknown: true,
-      });
-      return userWoPsswd;
+  const usersWithoutPassordPromise = users.map(async (user) => {
+    const userWoPsswd = await createUserWOShape.validate(user, {
+      stripUnknown: true,
     });
+    return userWoPsswd;
+  });
 
-    const usersWopassword = await Promise.all(usersWithoutPassordPromise);
+  const usersWopassword = await Promise.all(usersWithoutPassordPromise);
 
-    return usersWopassword;
-  }
-
-  throw new AppError("Permission denied", 403);
+  return usersWopassword;
 };
 
-export const retriveUserService = async (
-  request: Request
-): Promise<IUserResponse> => {
+export const retriveUserService = async (request: Request): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
-
-  const userExist = await userRepository.findOne({
+  const userExist = await userRepository.find({
     where: { id: request.user.id },
+    relations: {
+      address: true,
+      comments: true,
+      annoucement: true,
+    },
   });
 
   if (!userExist) {
     throw new AppError("Permission denied", 404);
   }
 
-  return userExist;
+  const userWithoutPassord = await createUserWOShape.validate(userExist[0], {
+    stripUnknown: true,
+  });
+
+  return userWithoutPassord;
 };
 
 export const deleteUserService = async (request: Request): Promise<number> => {

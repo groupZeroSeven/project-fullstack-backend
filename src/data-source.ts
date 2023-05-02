@@ -2,8 +2,12 @@ import "reflect-metadata";
 import "dotenv/config";
 import { DataSource } from "typeorm";
 import { User } from "./Entities/user.entity";
-import { FirstUser1680654833432 } from "./Migrations/1680654833432-FirstUser";
-import { FirstUser1680654918059 } from "./Migrations/1680654918059-FirstUser";
+import { Annoucement } from "./Entities/annoucement.entity";
+import { Image } from "./Entities/image.entity";
+import { Address } from "./Entities/addresses.entity";
+import { Comments } from "./Entities/comments.entity";
+import { a1681926720044 } from "./Migrations/1681926720044-a";
+import { cascade1682421781005 } from "./Migrations/1682421781005-cascade";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -22,8 +26,9 @@ const AppDataSource = new DataSource(
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
-        entities: [User],
-        migrations: [FirstUser1680654833432, FirstUser1680654918059],
+        ssl: Boolean(process.env.SSLMODE),
+        entities: [User, Annoucement, Image, Address, Comments],
+        migrations: [a1681926720044, cascade1682421781005],
       }
 );
 
