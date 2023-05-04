@@ -1,11 +1,11 @@
-# Projeto FullStack M6 - Frontend
+# Projeto FullStack M6 - Backend
 
 ## Tutorial
 
-### Como utilizar e testar o frontend
+### Como utilizar e testar o backend
 
 - Faça o clone do repositório (https://github.com/groupZeroSeven/project-fullstack-backend)
-- Digite as credencias no arquivo .env
+- Copie o arquivo .env.exemple e digite as credenciais no arquivo .env
 - Instale as dependências e rode as migrations com o comando "yarn ; yarn typeorm:run" 
 - Inicie o back com o comando "yarn run dev"
 
