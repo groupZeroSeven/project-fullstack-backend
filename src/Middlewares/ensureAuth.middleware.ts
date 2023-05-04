@@ -9,7 +9,6 @@ const ensureAuthMiddleware = async (
   next: NextFunction
 ) => {
   let token = req.headers.authorization;
-
   if (!token) {
     throw new AppError("Token invalid", 401);
   }

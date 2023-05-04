@@ -17,20 +17,20 @@ export const createCommentsService = async (
     throw new AppError("User not found", 404);
   }
 
-  const annoucement = await annoucementRepository.findOneBy({
+  const announcement = await annoucementRepository.findOneBy({
     id: annoucementId,
   });
 
-  if (!annoucement) {
+  if (!announcement) {
     throw new AppError("Annoucement not found", 404);
   }
 
   const newComment = commentsRepository.create({
     ...payload,
     user,
-    annoucement,
+    announcement,
   });
-
+  console.log(newComment)
   return await commentsRepository.save(newComment);
 };
 
@@ -80,3 +80,14 @@ export const updateCommentsService = async (
 
   throw new AppError("Permission denied", 403);
 };
+export const retrieveComments = async (annoucementId: string) => {
+
+  const comments = await commentsRepository.find({
+    relations: {
+      user: true,
+      announcement: true,
+    },
+  });
+
+  return comments;
+}

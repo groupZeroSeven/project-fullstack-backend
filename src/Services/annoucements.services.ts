@@ -1,16 +1,15 @@
-import AppDataSource from "../data-source";
-import { Annoucement } from "../Entities/annoucement.entity";
-import { Image } from "../Entities/image.entity";
-import { User } from "../Entities/user.entity";
-import { AppError } from "../Errors/error";
+import { Request } from 'express';
+import { Annoucement } from '../Entities/annoucement.entity';
+import { Image } from '../Entities/image.entity';
+import { User } from '../Entities/user.entity';
+import { AppError } from '../Errors/error';
 import {
   IAnnoucementListResult,
   IAnnoucementRequest,
   IAnnoucementResponse,
-} from "../Interfaces/annoucements";
-import { Request } from "express";
-import createUserWOShape from "../Serials/userWOpassword.serial";
-import { IUserWOpassword } from "../Interfaces/users";
+} from '../Interfaces/annoucements';
+import createUserWOShape from '../Serials/userWOpassword.serial';
+import AppDataSource from '../data-source';
 
 export const createAnnoucementService = async (
   data: IAnnoucementRequest,
@@ -24,7 +23,7 @@ export const createAnnoucementService = async (
   const { images, ...annoucement } = data;
 
   if (!user) {
-    throw new AppError("User not found", 404);
+    throw new AppError('User not found', 404);
   }
 
   const createdAnnoucement = annoucementRepository.create({
@@ -47,7 +46,7 @@ export const createAnnoucementService = async (
   });
 
   if (!returnAnnoucement) {
-    throw new AppError("User not found", 404);
+    throw new AppError('User not found', 404);
   }
 
   return returnAnnoucement;
@@ -63,7 +62,7 @@ export const updateAnnoucementService = async (
   });
 
   if (!findAnnoucement) {
-    throw new AppError("Annoucement not found", 404);
+    throw new AppError('Annoucement not found', 404);
   }
 
   if (findAnnoucement) {
@@ -77,10 +76,12 @@ export const updateAnnoucementService = async (
     return updatedAnnoucement;
   }
 
-  throw new AppError("Permission denied", 403);
+  throw new AppError('Permission denied', 403);
 };
 
-export const listAnnoucementUserService = async (request: Request) => {
+export const listAnnoucementUserService = async (
+  request: Request
+): Promise<IAnnoucementListResult> => {
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const userRepository = AppDataSource.getRepository(User);
   const perPage = 16;
@@ -88,28 +89,29 @@ export const listAnnoucementUserService = async (request: Request) => {
 
   const userExist = await userRepository.find({
     where: { id: request.params.id },
-    relations: { address: true, comments: true },
+    relations: {
+      annoucement: true,
+    },
   });
 
   if (!userExist) {
-    throw new AppError("User not found", 404);
+    throw new AppError('User not found', 404);
   }
+
+  const annoucement = userExist[0].annoucement;
+
+  const count = annoucement.length;
 
   const findAnnoucement: Array<IAnnoucementResponse> =
     await annoucementRepository.find({
       take: perPage,
       skip: (+page - 1) * perPage,
-      order: { created_at: "desc" },
-      where: { user: { id: userExist[0].id } },
+      order: { created_at: 'desc' },
+      relations: { user: true },
     });
-
-  const UserWithoutPassword = await createUserWOShape.validate(userExist[0], {
-    stripUnknown: true,
-  });
-
   const result = {
-    count: findAnnoucement.length,
-    data: { user: UserWithoutPassword, annoucements: findAnnoucement },
+    count: count,
+    data: findAnnoucement.filter((el) => el.user.id === userExist[0].id),
   };
   return result;
 };
@@ -128,7 +130,7 @@ export const listAnnoucementService = async (
     await annoucementRepository.find({
       take: perPage,
       skip: (+page - 1) * perPage,
-      order: { created_at: "desc" },
+      order: { created_at: 'desc' },
       relations: { user: true },
     });
   const result = {
@@ -144,11 +146,11 @@ export const retrieveAnnoucementService = async (
   const annoucementRepository = AppDataSource.getRepository(Annoucement);
   const findAnnoucement = await annoucementRepository.find({
     where: { id: request.params.id },
-    relations: ["images", "user", "comments", "user.address"],
+    relations: ['images', 'user', 'comments', 'user.address'],
   });
 
   if (!findAnnoucement[0]) {
-    throw new AppError("Not Found", 404);
+    throw new AppError('Not Found', 404);
   }
 
   const newUser = await createUserWOShape.validate(findAnnoucement[0].user, {
@@ -168,7 +170,7 @@ export const deleteAnnoucementService = async (
   });
 
   if (!annoucement) {
-    throw new AppError("Not Found", 404);
+    throw new AppError('Not Found', 404);
   }
 
   await annoucementRepository.remove(annoucement);

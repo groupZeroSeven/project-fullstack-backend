@@ -1,6 +1,7 @@
 import {
   createCommentsService,
   deleteCommentsService,
+  retrieveComments,
   updateCommentsService,
 } from "../Services/comments.services";
 import { Request, Response } from "express";
@@ -36,3 +37,12 @@ export const deleteCommentsController = async (
   const status = await deleteCommentsService(request.params.id);
   return response.status(Number(status)).send();
 };
+
+export const retrieveCommentsUserController = async (
+  request: Request,
+  response: Response
+) => {
+  const comments = await retrieveComments(request.params.annoucementId);
+  return response.status(200).json(comments);
+};
+
