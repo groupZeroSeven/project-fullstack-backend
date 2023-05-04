@@ -5,6 +5,8 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import { Annoucement } from "./annoucement.entity";
@@ -26,4 +28,10 @@ export class Comments {
     onDelete: "CASCADE",
   })
   announcement: Annoucement;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
