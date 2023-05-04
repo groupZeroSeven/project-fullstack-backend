@@ -8,6 +8,7 @@ import { Address } from "./Entities/addresses.entity";
 import { Comments } from "./Entities/comments.entity";
 import { a1681926720044 } from "./Migrations/1681926720044-a";
 import { cascade1682421781005 } from "./Migrations/1682421781005-cascade";
+import { Comments1683203764512 } from "./Migrations/1683203764512-comments";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -28,7 +29,11 @@ const AppDataSource = new DataSource(
         synchronize: false,
         ssl: Boolean(process.env.SSLMODE),
         entities: [User, Annoucement, Image, Address, Comments],
-        migrations: [a1681926720044, cascade1682421781005],
+        migrations: [
+          a1681926720044,
+          cascade1682421781005,
+          Comments1683203764512,
+        ],
       }
 );
 
