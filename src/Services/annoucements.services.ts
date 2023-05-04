@@ -10,7 +10,6 @@ import {
 } from "../Interfaces/annoucements";
 import { Request } from "express";
 import createUserWOShape from "../Serials/userWOpassword.serial";
-import { IUserWOpassword } from "../Interfaces/users";
 
 export const createAnnoucementService = async (
   data: IAnnoucementRequest,
