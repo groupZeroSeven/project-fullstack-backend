@@ -83,5 +83,13 @@
   /// Address ///
 
     - http://localhost:10000/api/userAddress
+    
+#### WorkSpace:   
 
+///Digite estas variaveis de ambiente junto com o WorkSpace para uma utilização mais flúida 
+
+{
+	"token": "{% response 'body', 'req_ffc81b46e7d349c2938f2c24761c33ea', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+	"baseURL": "http://localhost:10000/"
+}
 
