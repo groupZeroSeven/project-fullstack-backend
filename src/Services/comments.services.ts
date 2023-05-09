@@ -30,7 +30,7 @@ export const createCommentsService = async (
     user,
     announcement,
   });
-  console.log(newComment)
+  console.log(newComment);
   return await commentsRepository.save(newComment);
 };
 
@@ -71,6 +71,7 @@ export const updateCommentsService = async (
       ...findComment,
       ...payload,
       annoucement,
+      is_updated: true,
     });
 
     await commentsRepository.save(commentAnnoucement);
@@ -81,7 +82,6 @@ export const updateCommentsService = async (
   throw new AppError("Permission denied", 403);
 };
 export const retrieveComments = async (annoucementId: string) => {
-
   const comments = await commentsRepository.find({
     relations: {
       user: true,
@@ -90,4 +90,4 @@ export const retrieveComments = async (annoucementId: string) => {
   });
 
   return comments;
-}
+};
