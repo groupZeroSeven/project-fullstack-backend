@@ -9,6 +9,7 @@ import { Comments } from "./Entities/comments.entity";
 import { a1681926720044 } from "./Migrations/1681926720044-a";
 import { cascade1682421781005 } from "./Migrations/1682421781005-cascade";
 import { Comments1683203764512 } from "./Migrations/1683203764512-comments";
+import { createEntities1683651986483 } from "./Migrations/1683651986483-createEntities";
 
 const AppDataSource = new DataSource(
   process.env.NODE_ENV === "test"
@@ -33,6 +34,7 @@ const AppDataSource = new DataSource(
           a1681926720044,
           cascade1682421781005,
           Comments1683203764512,
+          createEntities1683651986483,
         ],
       }
 );

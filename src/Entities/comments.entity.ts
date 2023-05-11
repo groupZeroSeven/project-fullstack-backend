@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 import { User } from "./user.entity";
 import { Annoucement } from "./annoucement.entity";
+import { BlobOptions } from "buffer";
 
 @Entity("comments")
 export class Comments {
@@ -22,6 +23,9 @@ export class Comments {
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.comments, { onDelete: "CASCADE" })
   user: User;
+
+  @Column({ default: false })
+  is_updated: boolean;
 
   @JoinColumn()
   @ManyToOne(() => Annoucement, (annoucement) => annoucement.comments, {
