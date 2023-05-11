@@ -51,42 +51,7 @@
 
 #### Rotas:
 
-  /// Users ///
-
-    - http://localhost:10000/api/users
-    - http://localhost:10000/api/profile
-    - http://localhost:10000/api/users/:id
-
-  /// Recover password ///
-
-    - http://localhost:10000/api/recoverpassword
-
-  /// Login ///
-
-    - http://localhost:10000/api/login
-
-  /// Images ///
-
-    - http://localhost:10000/api/images/:id
-
-  /// Comments ///
-
-    - http://localhost:10000/api/:annoucementID/comments
-    - http://localhost:10000/api/:annoucementID/comments/:id
-
-  /// Anoucements ///
-
-    - http://localhost:10000/api/anoucements
-    - http://localhost:10000/api/anoucements/:id
-    - http://localhost:10000/api/anoucementUser/:id
-
-  /// Address ///
-
-    - http://localhost:10000/api/userAddress
-    
-#### WorkSpace:   
-
-///Digite estas variaveis de ambiente junto com o WorkSpace para uma utilização mais flúida 
+///Digite estas variaveis de ambiente junto com o WorkSpace para uma utilização mais flúida no Insomnia
 
 {
 	"token": "{% response 'body', 'req_ffc81b46e7d349c2938f2c24761c33ea', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
